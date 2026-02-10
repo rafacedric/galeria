@@ -9,9 +9,9 @@ interface ProfessionalPortfolioProps {
 const ProfessionalPortfolio: React.FC<ProfessionalPortfolioProps> = ({ onBack }) => {
   return (
     <div className="relative w-full min-h-screen z-20">
-      {/* Sticky Header Area */}
-      <div className="fixed top-0 left-0 w-full h-24 z-50 flex items-center px-8 md:px-12 pointer-events-none">
-      <button 
+      {/* Sticky Header Area with Liquid Glass Effect */}
+      <div className="fixed top-0 left-0 w-full h-24 z-50 flex items-center justify-between px-8 md:px-12 pointer-events-none bg-gradient-to-b from-white/80 to-transparent backdrop-blur-[2px]">
+        <button 
           onClick={onBack}
           className="pointer-events-auto flex items-center text-black/70 hover:text-black transition-colors group"
         >
@@ -19,6 +19,7 @@ const ProfessionalPortfolio: React.FC<ProfessionalPortfolioProps> = ({ onBack })
             <ArrowLeft size={28} />
           </div>
         </button>
+    
       </div>
 
       <div className="max-w-5xl mx-auto pt-40 px-6 pb-32">
@@ -90,8 +91,6 @@ const ProfessionalPortfolio: React.FC<ProfessionalPortfolioProps> = ({ onBack })
                   <li>Synthesized technical information to optimize design parameters for experimental projects.</li>
                 </ul>
               </div>
-
-              
             </div>
           </ScrollReveal>
 
@@ -121,7 +120,7 @@ const ProfessionalPortfolio: React.FC<ProfessionalPortfolioProps> = ({ onBack })
               </p>
               <p>
                 <span className="font-semibold">Tools &amp; Platforms:</span>{' '}
-                Git, GitHub, Docker, Linux, VS Code,local LLMs, LaTeX.
+                Git, GitHub, Docker, Linux, VS Code, local LLMs, LaTeX.
               </p>
               <p>
                 <span className="font-semibold">Languages:</span>{' '}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, ArrowRight, X } from 'lucide-react'; // Added ArrowRight and Chevron icons if preferred
 import ScrollReveal from './ScrollReveal';
 
 interface ArtPortfolioProps {
@@ -7,20 +7,66 @@ interface ArtPortfolioProps {
   onHoverChange: (isHovering: boolean) => void;
 }
 
-// Mock data with varying aspect ratios simulated by Unsplash dimensions
 const GALLERY_ITEMS = [
-  { id: 1, src: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=800&q=80", title: "Chromodynamics", aspect: "aspect-[3/4]" },
-  { id: 2, src: "https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=800&q=80", title: "Rose Gold Noise", aspect: "aspect-square" },
-  { id: 3, src: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=800&q=80", title: "Liquid State", aspect: "aspect-[4/3]" },
-  { id: 4, src: "https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&w=800&q=80", title: "Mathematical Beauty", aspect: "aspect-[2/3]" },
-  { id: 5, src: "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=800&q=80", title: "Glacial Form", aspect: "aspect-[3/2]" },
-  { id: 6, src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80", title: "Oil & Water", aspect: "aspect-[3/4]" },
-  { id: 7, src: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=800&q=80", title: "Neon Smoke", aspect: "aspect-square" },
-  { id: 8, src: "https://images.unsplash.com/photo-1604871000636-074fa5117945?auto=format&fit=crop&w=800&q=80", title: "Cyber Punk", aspect: "aspect-[16/9]" },
-  { id: 9, src: "https://images.unsplash.com/photo-1550059550-e8869c938d22?auto=format&fit=crop&w=800&q=80", title: "Refraction", aspect: "aspect-[9/16]" },
+  { 
+    id: 1, 
+    src: "/PXL_20250820_200642276.jpg", // Remove /images/ and /public/
+    title: "Porco", 
+    aspect: "aspect-square" 
+  },
+  { 
+    id: 2, 
+    src: "/PXL_20250813_132657005~2.jpg", 
+    title: "Ponte de Sonderborg", 
+    aspect: "aspect-[3/4]" 
+  },
+  { 
+    id: 3, 
+    src: "/PXL_20250723_183117285~2.jpg", 
+    title: "Limões", 
+    aspect: "aspect-[4/3]" 
+  },
+  { 
+    id: 4, 
+    src: "/PXL_20250610_070422514~2.jpg", 
+    title: "Cristo Redentor", 
+    aspect: "aspect-[2/3]" 
+  },
+  { 
+    id: 5, 
+    src: "/PXL_20240812_201747600.MP~2.jpg", 
+    title: "Santa Ceia", 
+    aspect: "aspect-[3/2]" 
+  },
+  { 
+    id: 6, 
+    src: "/PXL_20240731_193823264.jpg", 
+    title: "Cerejas", 
+    aspect: "aspect-square" 
+  },
+  { 
+    id: 7, 
+    src: "/PXL_20240106_133313208.jpg", 
+    title: "Abstrato ", 
+    aspect: "aspect-[16/9]" 
+  }
 ];
 
 const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
+  const navigateImage = (direction: 'next' | 'prev') => {
+    if (selectedImageIndex === null) return;
+    
+    if (direction === 'next') {
+      setSelectedImageIndex((selectedImageIndex + 1) % GALLERY_ITEMS.length);
+    } else {
+      setSelectedImageIndex((selectedImageIndex - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length);
+    }
+  };
+
+  const selectedImage = selectedImageIndex !== null ? GALLERY_ITEMS[selectedImageIndex] : null;
+
   return (
     <div className="relative w-full min-h-screen z-20">
       
@@ -35,12 +81,9 @@ const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) =>
           </div>
         </button>
 
-        <div className="hidden md:block pointer-events-none text-xs md:text-sm tracking-[0.3em] uppercase font-semibold text-black/40">
-          RAFAEL&nbsp;CEDRIC
-        </div>
+
       </div>
 
-      {/* Grid of works - same feel as ProfessionalPortfolio */}
       <div className="w-full max-w-6xl mx-auto pt-32 pb-20 px-4 md:px-8">
         <div className="mb-10">
           <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-gray-900 to-gray-400 tracking-tighter">
@@ -50,15 +93,12 @@ const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) =>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[320px]">
           {GALLERY_ITEMS.map((art, index) => (
-            <ScrollReveal
-              key={art.id}
-              delay={index * 80}
-              className="h-full"
-            >
+            <ScrollReveal key={art.id} delay={index * 80} className="h-full">
               <div
                 className="relative group h-full rounded-3xl p-4 bg-white/10 border border-white/40 backdrop-blur-xl shadow-[0_18px_60px_rgba(15,23,42,0.22)] flex flex-col cursor-pointer"
                 onMouseEnter={() => onHoverChange(true)}
                 onMouseLeave={() => onHoverChange(false)}
+                onClick={() => setSelectedImageIndex(index)}
               >
                 <div className="relative rounded-2xl overflow-hidden mb-4 flex-1">
                   <img
@@ -75,7 +115,7 @@ const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) =>
                     {art.title}
                   </h3>
                   <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-gray-500">
-                    Digital composition
+                    Oil on canvas
                   </p>
                 </div>
               </div>
@@ -83,6 +123,52 @@ const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) =>
           ))}
         </div>
       </div>
+
+      {/* Expanded Image View */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-white animate-in fade-in duration-300"
+          onClick={() => setSelectedImageIndex(null)}
+        >
+          {/* Close Button */}
+          <button 
+            className="absolute top-8 right-8 p-3 rounded-full bg-black/5 hover:bg-black/10 transition-colors z-[110]"
+            onClick={(e) => { e.stopPropagation(); setSelectedImageIndex(null); }}
+          >
+            <X size={32} className="text-black" />
+          </button>
+
+          {/* Navigation Arrows */}
+          <button 
+            className="absolute left-4 md:left-8 p-4 rounded-full bg-black/5 hover:bg-black/10 transition-all z-[110] hover:scale-110 active:scale-95"
+            onClick={(e) => { e.stopPropagation(); navigateImage('prev'); }}
+          >
+            <ArrowLeft size={32} className="text-black" />
+          </button>
+
+          <button 
+            className="absolute right-4 md:right-8 p-4 rounded-full bg-black/5 hover:bg-black/10 transition-all z-[110] hover:scale-110 active:scale-95"
+            onClick={(e) => { e.stopPropagation(); navigateImage('next'); }}
+          >
+            <ArrowRight size={32} className="text-black" />
+          </button>
+          
+          <div 
+            className="relative max-w-5xl max-h-full w-full h-full flex flex-col items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.title}
+              className="w-full h-full object-contain animate-in zoom-in-95 duration-500"
+            />
+            <div className="mt-6 text-center">
+              <h3 className="text-2xl font-bold tracking-tight text-gray-900">{selectedImage.title}</h3>
+              <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mt-2">Oil on canvas</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

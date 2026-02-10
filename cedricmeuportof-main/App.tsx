@@ -54,8 +54,7 @@ const App: React.FC = () => {
   return (
     <main className={`relative w-full min-h-screen font-sans bg-white text-black transition-colors duration-700 ${currentView === 'index' ? 'overflow-hidden h-screen' : ''}`}>
       
-      {/* 
-        Custom Cursor Logic: 
+      {/* Custom Cursor Logic: 
         Only show the outline (outer circle) when on the index page.
         Otherwise, pass showOutline={false} to keep it minimal (dot only).
       */}
@@ -82,7 +81,7 @@ const App: React.FC = () => {
               className="group relative w-64 h-20 rounded-full flex items-center justify-center transition-transform duration-500 hover:scale-105 active:scale-95"
             >
               <span className="relative z-10 font-bold text-lg tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-500 group-hover:from-black group-hover:to-black transition-all duration-300">
-                Art Portfolio
+                Art Gallery
               </span>
             </button>
             
