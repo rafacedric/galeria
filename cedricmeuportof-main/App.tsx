@@ -82,7 +82,7 @@ const App: React.FC = () => {
       <div className="fixed top-0 right-0 z-50 pointer-events-none p-6 md:p-12 
                       w-[40vw] h-[20vh] md:w-[25vw] md:h-[25vh] lg:w-[20vw]">
         <img
-          src="/cedriclogo.png" 
+          src={`${import.meta.env.BASE_URL}cedriclogo.png`}
           alt="Rafael Cedric"
           className="w-full h-full object-contain object-right-top transition-opacity duration-1000"
         />

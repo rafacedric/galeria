@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      // THIS IS THE FIX: It tells Vite your site is in a subfolder
+      // THIS MUST MATCH YOUR REPO NAME EXACTLY
       base: '/cedriporataofuncionamain/', 
       server: {
         port: 3000,
