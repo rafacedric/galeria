@@ -11,18 +11,9 @@ export interface ButtonBounds {
 
 interface LandingSceneProps {
   sceneMode: SceneMode;
-  hoverIntensity?: number;
-  button1Bounds?: ButtonBounds;
-  button2Bounds?: ButtonBounds;
 }
 
-const LandingScene: React.FC<LandingSceneProps> = ({ 
-  // Props kept for compatibility with App.tsx
-  sceneMode,
-  hoverIntensity = 0.0,
-  button1Bounds = { x: 0.5, y: 0.5, w: 0, h: 0 },
-  button2Bounds = { x: 0.5, y: 0.5, w: 0, h: 0 }
-}) => {
+const LandingScene: React.FC<LandingSceneProps> = ({ sceneMode }) => {
   const [isVertical, setIsVertical] = useState(false);
 
   useEffect(() => {
