@@ -7,6 +7,8 @@ const CustomCursor: React.FC = () => {
   // Use refs for mutable values to avoid re-renders on every frame
   const mouse = useRef({ x: -100, y: -100 });
   const outline = useRef({ x: -100, y: -100 });
+  // Track visibility in a ref to avoid stale closure in event handlers
+  const isVisibleRef = useRef(false);
   
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -27,12 +29,16 @@ const CustomCursor: React.FC = () => {
         dotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
       }
       
-      if (!isVisible) setIsVisible(true);
+      // Use ref to avoid re-registering listeners on every visibility state change
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true;
+        setIsVisible(true);
+      }
     };
 
     // 2. Visibility Handling
-    const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => { isVisibleRef.current = true; setIsVisible(true); };
+    const handleMouseLeave = () => { isVisibleRef.current = false; setIsVisible(false); };
 
     // 3. Hover Detection (Event Delegation)
     const handleMouseOver = (e: MouseEvent) => {
@@ -62,7 +68,7 @@ const CustomCursor: React.FC = () => {
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
     };
-  }, [isVisible]);
+  }, []);
 
   // 4. Animation Loop for Smooth Inertia (The "Lag" Effect)
   useEffect(() => {
