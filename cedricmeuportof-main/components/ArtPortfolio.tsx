@@ -49,7 +49,7 @@ const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) =>
       <div className="w-full max-w-7xl mx-auto pt-32 pb-20 px-4 md:px-8">
         <div className="mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">
-            ART&nbsp;GALLERY
+            GALLERY
           </h2>
         </div>
 

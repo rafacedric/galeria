@@ -6,6 +6,14 @@ import CustomCursor from './components/CustomCursor';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<SceneMode>('index');
+<<<<<<< HEAD
+=======
+  const [isVertical, setIsVertical] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const [isButtonPretendHovered, setIsButtonPretendHovered] = useState(false);
+  const [button1Bounds, setButton1Bounds] = useState<ButtonBounds>({ x: 0, y: 0, w: 0, h: 0 });
+  const [button2Bounds, setButton2Bounds] = useState<ButtonBounds>({ x: 0, y: 0, w: 0, h: 0 });
+>>>>>>> 822f4ab (Fix button and and page name)
 
   // Lock/unlock body scroll based on current view
   useEffect(() => {
@@ -20,6 +28,46 @@ const App: React.FC = () => {
     };
   }, [currentView]);
 
+<<<<<<< HEAD
+=======
+  // Track Button Positions for Shader Masking
+  useEffect(() => {
+    const updateBounds = () => {
+      if (btn1Ref.current) {
+        const rect1 = btn1Ref.current.getBoundingClientRect();
+        setButton1Bounds({
+          x: (rect1.left + rect1.width / 2) / window.innerWidth,
+          y: (rect1.top + rect1.height / 2) / window.innerHeight,
+          w: (rect1.width / 2) / window.innerWidth,
+          h: (rect1.height / 2) / window.innerHeight
+        });
+      }
+    };
+
+    updateBounds();
+    window.addEventListener('resize', updateBounds);
+    const timer = setTimeout(updateBounds, 100);
+    return () => {
+      window.removeEventListener('resize', updateBounds);
+      clearTimeout(timer);
+    }
+  }, [currentView]);
+
+  // Idle hover animation for the main button
+  useEffect(() => {
+    if (currentView !== 'index') {
+      setIsButtonPretendHovered(false);
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      setIsButtonPretendHovered((value) => (isButtonHovered ? false : !value));
+    }, 900);
+
+    return () => window.clearInterval(interval);
+  }, [currentView, isButtonHovered]);
+
+>>>>>>> 822f4ab (Fix button and and page name)
   const navigateTo = (view: SceneMode) => {
     window.scrollTo(0, 0);
     setCurrentView(view);
@@ -53,17 +101,34 @@ const App: React.FC = () => {
             
             <button
               onClick={() => navigateTo('art')}
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
               className="group relative w-64 h-20 rounded-full flex items-center justify-center 
                          bg-white/10 border border-white/30 backdrop-blur-md
                          transition-all duration-500 hover:scale-105 active:scale-95
                          hover:border-white/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
             >
+<<<<<<< HEAD
               {/* Single solid color text */}
               <span className="relative z-10 font-bold text-lg tracking-widest uppercase text-black transition-all duration-300">
                 Art Gallery
+=======
+              {/* Conditional text color: Full black on vertical, gradient on desktop */}
+              <span className={`relative z-10 font-bold text-lg tracking-widest uppercase transition-all duration-300
+                ${isVertical 
+                  ? 'text-black' 
+                  : 'text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-700 to-gray-700 group-hover:from-black group-hover:to-black'
+                }`}
+              style={{
+                opacity: isButtonHovered || isButtonPretendHovered ? 1 : 0.9,
+                transform: isButtonHovered || isButtonPretendHovered ? 'scale(1.02)' : 'scale(1)'
+              }}
+              >
+                See works
+>>>>>>> 822f4ab (Fix button and and page name)
               </span>
 
-              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/5 pointer-events-none" />
+              <div className={`absolute inset-0 rounded-full transition-all duration-500 pointer-events-none ${isButtonHovered || isButtonPretendHovered ? 'opacity-100 bg-white/10' : 'opacity-0 bg-white/5'}`} />
             </button>
 
           </div>
