@@ -35,18 +35,6 @@ const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) =>
 
   return (
     <div className="relative w-full min-h-screen z-20 bg-white">
-      {/* Header */}
-      <div className="fixed top-0 left-0 w-full h-24 z-50 flex items-center justify-between px-8 md:px-12 pointer-events-none">
-        <button
-          onClick={onBack}
-          className="pointer-events-auto flex items-center text-black/70 hover:text-black transition-colors group"
-        >
-          <div className="p-4 rounded-full border border-black/5 group-hover:bg-black/5 transition-all hover:scale-110">
-            <ArrowLeft size={28} />
-          </div>
-        </button>
-      </div>
-
       <div className="w-full max-w-7xl mx-auto pt-32 pb-20 px-4 md:px-8">
         <div className="mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">
