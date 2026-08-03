@@ -15,7 +15,8 @@ const GALLERY_ITEMS = [
   { id: 4, src: `${import.meta.env.BASE_URL}cristo.jpg`, title: "Cristo Redentor" },
   { id: 5, src: `${import.meta.env.BASE_URL}santaceia.jpg`, title: "Santa Ceia" },
   { id: 6, src: `${import.meta.env.BASE_URL}cereja.jpg`, title: "Cerejas" },
-  { id: 7, src: `${import.meta.env.BASE_URL}abstrato.jpg`, title: "Abstrato" }
+  { id: 7, src: `${import.meta.env.BASE_URL}abstrato.jpg`, title: "Abstrato" },
+  { id: 9, src: `${import.meta.env.BASE_URL}montanha.jpg`, title: "Montanha" }
 ];
 
 const ArtPortfolio: React.FC<ArtPortfolioProps> = ({ onBack, onHoverChange }) => {
